@@ -21,12 +21,17 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sistema de Vida")]
     public int vidaMaxima = 3;
     private int vidaAtual;
+
+    // Variáveis para o controle Touch
+    private float inputTouchH;
+    private float inputTouchV;
+
+    // Funções que os botões da UI vão chamar
+    public void SetInputHorizontal(float valor) { inputTouchH = valor; }
+    public void SetInputVertical(float valor) { inputTouchV = valor; }
     
     public GerenciadorVidaUI scriptUI;
-
     private Vector3 pontoDeResgate;
-
-    
 
     void Start()
     {
@@ -45,22 +50,27 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update()
-    {
-        // 1. Inputs de Movimento 
-        moveX = 0;
-        if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed) moveX = 1;
-        else if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed) moveX = -1;
+    { 
+        // 1. Inputs de Movimento (Unificando Teclado + Touch)
+        float tecladoH = 0;
+        float tecladoV = 0;
 
-        moveY = 0;
-        if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed) moveY = 1;
-        else if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) moveY = -1;
+        // Leitura do Teclado (New Input System)
+        if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed) tecladoH = 1;
+        else if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed) tecladoH = -1;
 
-        // 2. Pulo 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && Mathf.Abs(rb.linearVelocity.y) < 0.01f && !estaNaEscada)
+        if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed) tecladoV = 1;
+        else if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) tecladoV = -1;
+
+        // Soma as forças (Teclado + Touch) e limita entre -1 e 1
+        moveX = Mathf.Clamp(tecladoH + inputTouchH, -1, 1);
+        moveY = Mathf.Clamp(tecladoV + inputTouchV, -1, 1);
+
+        // 2. Pulo (Teclado chamando a função pública)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            Pular();
         }
-
         
         AtualizarVisual();
     }
@@ -84,19 +94,18 @@ public class PlayerMovement : MonoBehaviour
     void AtualizarVisual()
     {
         // Se estiver andando no chão ou subindo escada,
-        bool movendo = Mathf.Abs(moveX) > 0 || (estaNaEscada && Mathf.Abs(moveY) > 0);
+        bool movendo = Mathf.Abs(moveX) > 0.1f || (estaNaEscada && Mathf.Abs(moveY) > 0.1f);
         
         if (anim != null)
         {
             anim.SetBool("estaAndando", movendo);
-            
             anim.speed = movendo ? 1f : 0f;
         }
 
-        
         if (moveX != 0)
         {
-            visualDoPlayer.transform.localScale = new Vector3(moveX, 1, 1);
+            // Ajuste de escala para o player virar para o lado certo
+            visualDoPlayer.transform.localScale = new Vector3(moveX > 0 ? 1 : -1, 1, 1);
         }
     }
 
@@ -116,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
             estaNaEscada = false;
         }
     }
+
     public void TomarDano(int quantidade)
     {
         vidaAtual -= quantidade;
@@ -133,7 +143,8 @@ public class PlayerMovement : MonoBehaviour
             VoltarParaCheckPoint();
         }
     }
-   public void SalvarCheckpoint(Vector3 novaPosicao)
+
+    public void SalvarCheckpoint(Vector3 novaPosicao)
     {
         pontoDeResgate = novaPosicao;
     }
@@ -141,8 +152,17 @@ public class PlayerMovement : MonoBehaviour
     public void VoltarParaCheckPoint()
     {
         transform.position = pontoDeResgate;
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.linearVelocity = Vector2.zero;
     }
 
+    // Função pública para o botão de Touch e Teclado chamarem
+    public void Pular()
+    {
+        // Verificação para garantir que só pule no chão e fora da escada
+        if (Mathf.Abs(rb.linearVelocity.y) < 0.01f && !estaNaEscada)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            Debug.Log("Pulo executado!");
+        }
+    }
 }
