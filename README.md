@@ -1,28 +1,93 @@
-# 8bit-plataforma
-# [Nome do Jogo] - 2D Platformer & Mechanics Study
+# 🎮 Plataforma 8 Bits
 
-![Status do Projeto](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
-![Unity Version](https://img.shields.io/badge/Unity-2022.3+-blue?logo=unity)
-![C#](https://img.shields.io/badge/C%23-Language-green?logo=csharp)
+### Estudo de Mecânicas 2D com Unity e C#
 
 ## 📝 Sobre o Projeto
-Este é um projeto de estudo focado no desenvolvimento de mecânicas fundamentais para jogos de plataforma 2D utilizando o motor gráfico **Unity**. O objetivo principal foi implementar sistemas escaláveis de jogabilidade, explorando lógica de programação em C#, física 2D e interface de usuário (UI).
+
+Este projeto foi desenvolvido com foco no estudo e implementação de mecânicas fundamentais para jogos de plataforma 2D utilizando a engine Unity.
+
+O objetivo principal é consolidar conceitos essenciais de desenvolvimento de jogos, incluindo:
+
+* Lógica de programação em C#
+* Física 2D aplicada
+* Arquitetura de código escalável
+* Integração de UI/UX
+
+Além disso, o projeto evoluiu para incluir suporte a dispositivos mobile, com adaptação completa de interface e controles.
 
 ## 🚀 Funcionalidades Implementadas
-* **Sistema de Checkpoints Dinâmicos:** Salvamento de posição baseado em interação com objetos do cenário (Tiles/Sprites).
-* **Gestão de Vida e Dano:** Sistema de saúde integrado ao HUD (UI) com feedback visual imediato.
-* **Mecânicas de Perigo (Hazards):** Implementação de zonas de morte (Killzones) e obstáculos temporizados (Fogo com ciclos de ativação).
-* **Controle de Física 2D:** Movimentação fluida, detecção de colisão via Triggers e gerenciamento de Rigidbody2D.
-* **Arquitetura de Código:** Separação de responsabilidades e uso de Coroutines para animações baseadas em tempo.
+
+### 🎯 Gameplay & Sistemas
+
+* **Sistema de Checkpoints Dinâmicos**
+  Salvamento automático da posição do jogador baseado em interação com elementos do cenário.
+
+* **Sistema de Vida e Dano**
+  Controle de saúde integrado ao HUD com feedback visual em tempo real.
+
+* **Mecânicas de Perigo (Hazards)**
+
+  * Killzones (zonas de morte instantânea)
+  * Obstáculos temporizados (ex: fogo com ciclos de ativação/desativação)
+
+* **Movimentação e Física 2D**
+
+  * Controle fluido do personagem
+  * Uso de Rigidbody2D
+  * Detecção precisa via Colliders e Triggers
+
+---
+
+### 📱 UI/UX (Atualização Mobile)
+
+* Interface adaptada para dispositivos móveis
+* Controles touch (botões virtuais):
+
+  * Movimento lateral
+  * Pulo
+* Feedback visual otimizado para telas menores
+* Layout responsivo utilizando Canvas Scaler
+* Melhorias na usabilidade e acessibilidade
+
+---
+
+### 🧠 Arquitetura e Código
+
+* Separação de responsabilidades (boas práticas de OOP)
+* Uso de Coroutines para eventos baseados em tempo
+* Estrutura modular para fácil expansão
+* Organização de scripts orientada a sistemas (Player, UI, GameManager)
+
+---
 
 ## 🛠️ Tecnologias Utilizadas
+
 * **Engine:** Unity
 * **Linguagem:** C#
-* **Ferramentas:** Tilemap System, Sprite Renderer, UI Canvas.
+* **Ferramentas:**
 
-## 🎮 Como Rodar o Projeto
-1. Clone este repositório: 
-2. Abra a pasta do projeto no **Unity Hub**.
-3. Certifique-se de usar a versão [6000,3,2f1] ou superior.
-4. Localize a cena principal em `Assets/Scenes` e pressione Play.
+  * Tilemap System
+  * Sprite Renderer
+  * UI Canvas
+  * Rigidbody2D / Physics 2D
 
+## 📈 Objetivos do Projeto
+
+* Evoluir habilidades em desenvolvimento de jogos 2D
+* Aplicar boas práticas de programação
+* Criar base sólida para projetos futuros mais complexos
+* Explorar desenvolvimento multiplataforma (PC + Mobile)
+
+---
+
+## 📌 Próximos Passos (Roadmap)
+
+* Sistema de coleta (coins/itens)
+* Menu principal e sistema de pause
+* Otimização de performance para mobile
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido como projeto de estudo focado em Unity e C#.
